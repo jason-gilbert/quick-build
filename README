@@ -6,6 +6,8 @@ when you don't want to deal with bloated build tools.
 - qc for C
 - qj for Java
 
+Works well with [STB single-file header libraries] (https://github.com/nothings/stb)
+
 # Usage Options
 - Copy the script into a project directory and create a main.c file.  Running
   'qc' within that directory will compile main.c and generate an executable
