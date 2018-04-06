@@ -8,7 +8,7 @@ name=$(basename "$PWD")
 CFLAGS="-Wall -Wextra -Werror $CFLAGS"
 
 if [ -f qc.env ]; then
-    source qc.env
+    . $PWD/qc.env
 fi
 
 src_file='main.c'
