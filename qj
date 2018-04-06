@@ -1,0 +1,48 @@
+#!/bin/sh
+
+name=$(basename "$PWD")
+
+cmd="$1"
+if [ -z "$cmd" ]; then
+    cmd='run'
+fi
+
+log() {
+    [ -z "$LOG" ] || echo "LOG: $1" >&2
+}
+
+build() {
+    log 'build'
+
+    [ -d out ] || mkdir out
+
+    time -f 'compile: %e seconds' javac -Werror -Xlint -profile compact1 -proc:none -encoding utf-8 -d out -cp out -sourcepath src src/main.java
+}
+
+clean() {
+    log 'clean'
+
+    rm -rf out
+}
+
+run() {
+    log 'run'
+
+    clean
+
+    main_class="$1"
+    if [ -z "$main_class" ]; then
+        main_class='main'
+    fi
+
+    build && java -cp out "$main_class"
+}
+
+if [ "$cmd" = 'build' ]; then
+    build
+elif [ "$cmd" = 'clean' ]; then
+    clean
+elif [ "$cmd" = 'run' ]; then
+    run "$2"
+fi
+
